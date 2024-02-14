@@ -20,23 +20,7 @@ This scripts purpose is to dynamically create classes, methods and calls based o
 │   └── id: ...
 ```
 
-```
-"dbusFunctions": [
-    {
-      "id": "EXAMPLE",
-      "parameters": [
-        { "id": "example_string", "type": "string" },
-        { "id": "example_int", "type": "int" }
-      ],
-      "metadata": {
-        "dbusServiceName": "com.interface.example",
-        "dbusObjectName": "/example/object",
-        "dbusInterfaceName": "com.interface.example",
-        "dbusFunctionName": "dbusMethodExample"
-      }
-    }
-]
-```
+https://github.com/n1sk4/dbus-app-generator/blob/c74db2a3e5cf82f7e4e0a349bcf92e3415f13a6f/example/functions.json#L1C1-L16C2
 
 ## Dependencies
 Python 3.11 installed
@@ -78,40 +62,5 @@ Examples:
 
 Output:
 Generated DBApp.py file:
-```
-#!/usr/bin/python3
- 
-from asyncio import new_event_loop
- 
-import sdbus
-from sdbus import (
-    DbusInterfaceCommonAsync,
-    dbus_method_async,
-    request_default_bus_name_async,
-)
- 
-class ComInterfaceExampleObject(
-      DbusInterfaceCommonAsync,
-      interface_name='com.interface.example'):
- 
-      @dbus_method_async(input_signature='si', result_signature='b', method_name='dbusMethodExample')
-      async def dbusMethodExample(arg0, arg1, arg2):
-          print("Received arguments:", arg0, arg1, arg2)
-          return True
- 
-      #Add functions here...
- 
-if __name__ == '__main__':
-    loop = new_event_loop()
- 
-    comInterfaceExample = ComInterfaceExampleObject()
-     
-    async def startup() -> None:
-        print("Running...")
- 
-        await request_default_bus_name_async('com.interface.example')
-        ct600dbapp.export_to_dbus('/example/object')
-     
-    loop.run_until_complete(startup())
-    loop.run_forever()
-```
+
+https://github.com/n1sk4/dbus-app-generator/blob/c74db2a3e5cf82f7e4e0a349bcf92e3415f13a6f/example/DBApp.py#L1C1-L34C23
