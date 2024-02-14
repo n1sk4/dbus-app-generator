@@ -62,11 +62,13 @@ Make executable:
 Run:
 Running the command to start DBusAppGenerator, it will generate every interface, object and function from provided JSON file.
 You can add arguments to setup the name, select JSON file and select the interface which will be generated:
-| Argument  | Description |
-| ------------- | ------------- |
-| interface_name  | interface name from JSON file you want to generate functions for  |
-| -f / --output_file  | Name of the generated file  |
-| -j / --json_file Cell  | JSON file name/path  |
+| Argument                | Description                                                       |
+| ----------------------- | ----------------------------------------------------------------- |
+| interface_name          | interface name from JSON file you want to generate functions for  |
+| -f / --output_file      | Name of the generated file                                        |
+| -j / --json_file Cell   | JSON file name/path                                               |
+
+
 Examples:
 ```
 ./DBusAppGenerator.py
