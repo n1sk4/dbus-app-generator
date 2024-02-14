@@ -1,0 +1,16 @@
+{
+  "dbusFunctions": [
+  {
+    "id": "EXAMPLE",
+    "parameters": [
+      { "id": "example_string", "type": "string" },
+      { "id": "example_int", "type": "int" }
+    ],
+    "metadata": {
+      "dbusServiceName": "com.interface.example",
+      "dbusObjectName": "/example/object",
+      "dbusInterfaceName": "com.interface.example",
+      "dbusFunctionName": "dbusMethodExample"
+    }
+  }]
+}
