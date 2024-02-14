@@ -20,7 +20,7 @@ This scripts purpose is to dynamically create classes, methods and calls based o
 │   └── id: ...
 ```
 
-https://github.com/n1sk4/dbus-app-generator/blob/c74db2a3e5cf82f7e4e0a349bcf92e3415f13a6f/example/functions.json#L1C1-L16C2
+https://github.com/n1sk4/dbus-app-generator/blob/c74db2a3e5cf82f7e4e0a349bcf92e3415f13a6f/example/functions.json#L1-L16
 
 ## Dependencies
 Python 3.11 installed
@@ -63,4 +63,4 @@ Examples:
 Output:
 Generated DBApp.py file:
 
-https://github.com/n1sk4/dbus-app-generator/blob/c74db2a3e5cf82f7e4e0a349bcf92e3415f13a6f/example/DBApp.py#L1C1-L34C23
+https://github.com/n1sk4/dbus-app-generator/blob/c74db2a3e5cf82f7e4e0a349bcf92e3415f13a6f/example/DBApp.py#L1-L34
