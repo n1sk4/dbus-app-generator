@@ -2,13 +2,14 @@
 import json
 
 # Before running DBApp.py install:
-# * DBus Python library: 'sudo apt install -y python3-dbus'
-# * GI (GObject Introspection) Python library: 'sudo apt install python3-gi'
+# * DBus Python library: 'sudo pip install --only-binary ':all:' sdbus --break-system-packages'
+# * JSON Python library: 'sudo apt install -y python3-json'
 
 # Data types for D-Bus: https://dbus.freedesktop.org/doc/dbus-specification.html
 
 class DBusFunctionsGenerator():
-    def __init__(self, json_file=None, executor= "#!/usr/bin/python3"):
+    def __init__(self, json_file=None, interfaces = [], executor= "#!/usr/bin/python3"):
+      self.interfaces = interfaces 
       # Run 'which python3' to check the correct path for the first line #!/{path_to_python3}/python3
       self.linux_executor = executor
       self.data_type_map = {
@@ -35,11 +36,20 @@ class DBusFunctionsGenerator():
       self.class_object_map = {}
       self.all_class_objects = ""
       self.all_startup = ""
+      self.json_file = json_file
       self.load_json_file(json_file)
       self.map_dbus_objects_to_interfaces(self.data)
       self.create_classes()
       self.create_startup()
       self.create_class_objects()
+
+    def check_interfaces(self, interface):
+      if self.interfaces is None or self.interfaces == []:
+        return True
+      for item in self.interfaces:
+        if item == interface:
+          return True
+      return False
 
     def map_data_types(self, data_types, data_type_map):
       return ','.join(data_type_map.get(data_type, "") for data_type in data_types.split(','))
@@ -63,6 +73,9 @@ class DBusFunctionsGenerator():
 
         if object_name not in self.object_interface_map:
           interface_name = node["metadata"]["dbusInterfaceName"]
+          if not self.check_interfaces(interface_name):
+            #print(f"No interface with name '{interface_name}' found in '{self.json_file}'")
+            continue
           self.object_interface_map[object_name] = interface_name
 
     def load_and_create_functions(self, data, dbus_service_name, dbus_object_name):
@@ -107,7 +120,7 @@ class DBusFunctionsGenerator():
 
     def create_function(self, in_signature, out_signature, function_name, argument_number, result):
       arguments = ', '.join([f'arg{i}' for i in range(0, argument_number)])
-      function_decorator = f"@dbus_method_async(input_signature='{in_signature}', result_signature='{out_signature}')"
+      function_decorator = f"@dbus_method_async(input_signature='{in_signature}', result_signature='{out_signature}', method_name='{function_name}')"
       function_def = f"""
       async def {function_name}({arguments}):"""
       function_body = f"""
@@ -167,9 +180,8 @@ if __name__ == '__main__':
     loop = new_event_loop()
 {self.all_class_objects}
     async def startup() -> None:
-        print("Startup...")
+        print("Running...")
 {self.all_startup}
     loop.run_until_complete(startup())
     loop.run_forever()
-    print(f"D-Bus service running...")
 """
